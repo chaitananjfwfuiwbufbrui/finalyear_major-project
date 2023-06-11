@@ -1,0 +1,135 @@
+{% extends 'example.html' %}
+{% load static %}
+
+
+    {% block title %}tracker{% endblock title %}
+    {% block body %}
+    <!---->
+    <title>Hello, world!</title>
+     <script>
+    function Addproduct() {
+      var element = document.getElementById("table");
+      var element1 = document.getElementById("formsprod");
+      element1.classList.remove("hidden");
+      element.classList.add("hidden");
+    }
+    function highlightElement() {
+      var element = document.getElementById("table");
+      var element1 = document.getElementById("formsprod");
+      element.classList.remove("hidden");
+      element1.classList.add("hidden");
+    }
+    function viewproducts() {
+      var element = document.getElementById("table");
+      var element1 = document.getElementById("formsprod");
+      var element2 = document.getElementById("viewproducts");
+      element2.classList.remove("hidden");
+      element.classList.add("hidden");
+      element1.classList.add("hidden");
+    }
+  </script>
+  </head>
+  <body style="max-height: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center mdf">
+
+      
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <button onclick="Addproduct()" type="button" class="btn btn-outline-primary">Add New Products</button>
+        <a href="{% url 'viewproducts' %}">
+
+          <button  type="button" class="btn btn-outline-primary">Update Product Quantity</button>
+        </a>
+        <button  onclick="highlightElement()" type="button" class="btn btn-outline-primary">View Consumer Orders</button>
+      </div>
+      
+      <form id = "formsprod"   method="post" action={% url 'AddProductAction' %} class="hidden">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Product Name</label>
+        <input name="t1" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Quantity</label>
+        <input name="t2"  type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Product Price</label>
+        <input name="t3" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Product Description</label>
+        <input name="t4" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+     
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          product image</label>
+        <input  name="t5" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+     
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <table class="table table-striped hidden" id="viewproducts">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">prize</th>
+          <th scope="col">qty</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in data %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{obj.productname}}</td>
+          <td>{{obj.customername}}</td>
+          <td>{{obj.contactno}}</td>
+          <td>{{obj.Email}}</td>
+          <td>{{obj.Address}}</td>
+          <td>{{obj.Ordered_Date}}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+    <table class="table table-striped " id="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Customer Name</th>
+          <th scope="col">Email ID</th>
+          <th scope="col">Address</th>
+          <th scope="col">Ordered Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for obj in data %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{obj.productname}}</td>
+          <td>{{obj.customername}}</td>
+          <td>{{obj.contactno}}</td>
+          <td>{{obj.Email}}</td>
+          <td>{{obj.Address}}</td>
+          <td>{{obj.Ordered_Date}}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+  </div>
+  </body>
+  {% endblock body %}

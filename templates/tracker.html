@@ -1,0 +1,108 @@
+{% extends 'example.html' %}
+{% load static %}
+
+
+    {% block title %}tracker{% endblock title %}
+    {% block body %}
+    <!---->
+    <title>Hello, world!</title>
+     <script>
+    function Addproduct() {
+      var element = document.getElementById("table");
+      var element1 = document.getElementById("formsprod");
+      element1.classList.remove("hidden");
+      element.classList.add("hidden");
+    }
+    function highlightElement(id) {
+      var element = document.getElementById("table");
+      var element1 = document.getElementById("formsprod");
+      element.classList.remove("hidden");
+      element1.classList.add("hidden");
+    }
+  </script>
+  </head>
+  <body style="max-height: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center mdf">
+
+      
+      <div class="btn-group" role="group" aria-label="Basic outlined example">
+        <button onclick="Addproduct()" type="button" class="btn btn-outline-primary">Add New Products</button>
+        <a href="{% url 'viewproducts' %}" >
+        <button type="button" class="btn btn-outline-primary">Update Product Quantity</button>
+      </a>
+       
+       <a href="{% url 'ViewOrders' %}" >
+
+         <button type="button" class="btn btn-outline-primary">View Consumer Orders</button>
+        </a>
+      </div>
+      
+      <form id = "formsprod"   method="post" action={% url 'AddProductAction' %} class="hidden">
+        {% csrf_token %}
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Product Name</label>
+        <input name="t1" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Quantity</label>
+        <input name="t2"  type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Product Price</label>
+        <input name="t3" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          Product Description</label>
+        <input name="t4" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+     
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">
+          product image</label>
+        <input  name="t5" type="file" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        
+      </div>
+     
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+    <table class="table table-striped hidden" id="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td colspan="2">Larry the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </body>
+  {% endblock body %}
