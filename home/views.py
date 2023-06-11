@@ -32,7 +32,7 @@ import ipfshttpclient as  ips
 import os
 from django.core.files.storage import FileSystemStorage
 import pickle
-deployed_contract = '0xD35b45888cd906c66E39984DD2438477E95F7e8c'
+deployed_contract = '0xF597653688B174DeF777C473f4c762E60DAe29cd'
 def getpoduct_function(lefn):
     blockchain_address = 'http://127.0.0.1:9545' #Blokchain connection IP
     web3 = Web3(HTTPProvider(blockchain_address))
@@ -46,7 +46,7 @@ def getpoduct_function(lefn):
     contract = web3.eth.contract(address=deployed_contract_address, abi=contract_abi) #now calling contract to access data
    
     details = contract.functions.getProduct().call()  
-    print(details)
+    # print(details)
 
     objects = []
     rows = details.split("\n")
@@ -70,12 +70,12 @@ def getpoduct_function(lefn):
                     "qty": arr[4],
                     "desc":arr[5],
                     "img":"http://127.0.0.1:8000/media/shop/images/7v3hvjcixb14y1zhw9pd.jpg",
-                    "slug": "\BookOrder?farmer='+arr[1]+'&crop='+arr[2]"
+                    "slug": f"\BookOrder?farmer='+arr[1]+'&crop={arr[2]}"
                 } 
             # print(arr,obj)
 
             objects.append(obj)
-    print(objects)
+    # print(objects)
     return objects
 
 details = ""
@@ -264,16 +264,16 @@ def singleproduct(request):
             for line in file:
                 user = line.strip('\n')
         file.close()
-        readDetails("signup")
-        rows = details.split("\n")
-        for i in range(len(rows)-1):
-            arr = rows[i].split("#")
-            if arr[0] == "signup":
-                if arr[1] == user:
-                    details = arr[3]+","+arr[4]+","+arr[5]
-                    break
-        print(details)
-        # context = {'single' : single,"prod":new_list,"catagory":newcat,'cartitems':cartitems}
+        det = getpoduct_function(100)
+
+        # print(det)
+        for i  in range(len(det)):
+            if det[i]['productname'] == pid:
+                print(det[i])
+                break
+
+        single = det[i]
+        context = {'single' : single,"username":user}
         return render(request,'singleproduct.html',context)
 
     

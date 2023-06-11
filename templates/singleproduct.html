@@ -7,15 +7,8 @@
 <meta charset="UTF-8" />
 <meta name="keywords"
     content="Bootie Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-<script>
-    addEventListener("load", function () {
-        setTimeout(hideURLbar, 0);
-    }, false);
+<script src="{% static 'payment.js' %}"></script>
 
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    }
-</script>
 <!-- //Meta tag Keywords -->
 
 <!-- Custom-Files -->
@@ -26,6 +19,7 @@
 <!-- Style-CSS -->
 <!-- font-awesome-icons -->
 <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
 <!-- //font-awesome-icons -->
 <!-- /Fonts -->
 <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700" rel="stylesheet">
@@ -43,7 +37,7 @@
 {% block paged %}{{single.product_name}}{% endblock paged %}
 <!-- //header -->
 
-{% block active %}active{% endblock active %}
+{% comment %} {% block active %}active{% endblock active %} {% endcomment %}
 
 <!-- banner -->
 <section class="ab-info-main py-md-5 py-4">
@@ -177,7 +171,7 @@
 
 
                     <h3 class="sear-head">Special Deals</h3>
-                    {% for s in  catagory %}
+                    {% for s in catagory %}
                     <div class="special-sec1 row mb-3">
                         <div class="img-deals col-md-4">
                             <a href="{{s.slug}}">
@@ -200,31 +194,27 @@
             <div class="left-ads-display col-lg-8">
                 <div class="row">
                     <div class="desc1-left col-md-6">
-                        <img src="{{single.product_image.url}}" class="img-fluid" alt="">
+                        <img src="{{single.img}}" class="img-fluid" alt="">
                     </div>
                     <div class="desc1-right col-md-6 pl-lg-4">
-                        <h3>{{single.product_name}}.</h3>
-                        <h5>{{single.prize}} <a href="#">click for offer</a></h5>
+                        <h3>{{single.productname}}.</h3>
+                        <h5>{{single.prize}} <a href="#">{{single.supplier}}</a></h5>
                         <div class="available mt-3">
-                            <form action="#" method="post" class="w3layouts-newsletter">
-                                <input type="email" name="Email" placeholder="Enter your email..." required="">
-                                <button class="btn1">Check</button>
+                                <input id = "prize" type="text" hidden value = "{{single.prize}}">
+                                <input id = "slug" type="text" hidden value = "{{single.slug}}">
+                            <div >
 
-                            </form>
+                                <a class="btn btn-info btn-lg" id = "transactionButton" >
+                                    <span style="color: rgb(255, 255, 255); "><i class="fa fa-shopping-cart"
+                                            aria-hidden="true"></i>
+                                    </span>
 
-                            {% if user.is_authenticated %}
-                            <a href="#" class="btn btn-info btn-lg">
-                                <span style="color: rgb(255, 255, 255); "><i class="fa fa-shopping-cart" aria-hidden="true"></i> 
-                                </span>
-                            
-                                <span class="glyphicon glyphicon-shopping-cart"></span>  Shopping Cart
-                              </a>
-                            
-                            {% else %}
-                            <span><a href="/login">login to save in wishlist </a></span>
-                            {% endif %}
-                            <p style="margin-top: .5rem;">Lorem Ipsum has been the industry's standard since the 1500s. Praesent ullamcorper dui
-                                turpis.. </p>
+                                    <span class="glyphicon glyphicon-shopping-cart"></span> Buy Now
+                                </a>
+                            </div>
+
+
+                            <p style="margin-top: .5rem;"> {{single.desc}}</p>
                         </div>
                         <div class="share-desc">
                             <div class="share">
@@ -256,21 +246,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="row sub-para-w3layouts mt-5">
 
-                    <h3 class="shop-sing">{{single.product_name}}</h3>
-                    <p>{{single.desc}}</p>
-                    <p class="mt-3 italic-blue">Consectetur adipisicing elPellentesque vehicula augue eget nisl
-                        ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad minim
-                        veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
-                    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipisicing elPellentesque vehicula augue
-                        eget nisl ullamcorper, molestie blandit ipsum auctor. Mauris volutpat augue dolor.Consectetur
-                        adipisicing elit, sed do eiusmod tempor incididunt ut lab ore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco. labore et dolore magna aliqua.</p>
-                </div>
-                
-                <!--recommendations page-->  
+
+                <!--recommendations page-->
                 <h3 class="shop-sing">Featured Products</h3>
                 <div class="row m-0">
                     {% for i in prod %}
